@@ -9,8 +9,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer"; // Import the reusable Footer component
 import CustomCursor from "@/components/CustomCursor"; // Import the reusable CustomCursor component
 import { Typewriter } from "react-simple-typewriter";
-import '../styles/globals.css';
-import '@fontsource/poppins'; // Install via npm if preferred
+import "../styles/globals.css";
+import "@fontsource/poppins"; // Install via npm if preferred
 
 export default function Home() {
   const [showCookieBar, setShowCookieBar] = useState(true); // State for cookie bar
@@ -61,10 +61,10 @@ export default function Home() {
               />
             </h1>
 
-{/* Significant Space */}
-<p className="mt-[250px] text-neutral-700 animate-italicize italic text-sm">
-  More to unfold. Come back soon.
-</p>
+            {/* Significant Space */}
+            <p className="mt-[250px] text-neutral-700 animate-italicize italic text-sm">
+              More to unfold. Come back soon.
+            </p>
           </div>
         </section>
 
@@ -86,10 +86,19 @@ export default function Home() {
             <div>
               <h2 className="text-2xl font-light mb-6">Projects</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {["Research", "Competitions", "Concepts", "Built"].map((category) => (
+                {/* Link Research to app/research */}
+                <Link
+                  href="/research"
+                  className="border border-neutral-200 p-4 hover:bg-neutral-50 transition-colors"
+                >
+                  Research
+                </Link>
+
+                {/* Link Competitions, Concepts, Built to app/architecture */}
+                {["Competitions", "Concepts", "Built"].map((category) => (
                   <Link
                     key={category}
-                    href="/projects" // Link all categories to the Projects page
+                    href="/architecture"
                     className="border border-neutral-200 p-4 hover:bg-neutral-50 transition-colors"
                   >
                     {category}
