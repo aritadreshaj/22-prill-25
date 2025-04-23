@@ -11,33 +11,43 @@ export default function CustomCursor() {
     cursor.style.width = "16px";
     cursor.style.height = "16px";
     cursor.style.borderRadius = "50%";
-    cursor.style.backgroundColor = "#ff6000";
+    cursor.style.backgroundColor = "#ff6000"; // Default color is orange
     cursor.style.pointerEvents = "none";
     cursor.style.zIndex = "9999";
     cursor.style.transform = "translate(-50%, -50%)";
     cursor.style.transition = "background-color 0.2s ease, transform 0.1s ease";
     document.body.appendChild(cursor);
 
-    // Move the cursor with the mouse
+    // Hide the default cursor globally
+    document.body.style.cursor = "none";
+
+    // Apply `cursor: none` to all clickable elements
+    const style = document.createElement("style");
+    style.innerHTML = `
+      * {
+        cursor: none !important; /* Disable the default hand cursor globally */
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Move the custom cursor with the mouse
     const moveCursor = (e: MouseEvent) => {
       cursor.style.left = `${e.clientX}px`;
       cursor.style.top = `${e.clientY}px`;
     };
 
-    // Change cursor color and size when hovering over clickable elements
+    // Change cursor color to black when hovering over clickable elements
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target.tagName === "A" || target.tagName === "BUTTON") {
-        cursor.style.backgroundColor = "black";
-        cursor.style.transform = "translate(-50%, -50%) scale(1.0)";
+        cursor.style.backgroundColor = "black"; // Change to black
       }
     };
 
     const handleMouseOut = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target.tagName === "A" || target.tagName === "BUTTON") {
-        cursor.style.backgroundColor = "#ff6000";
-        cursor.style.transform = "translate(-50%, -50%) scale(1)";
+        cursor.style.backgroundColor = "#ff6000"; // Revert to orange
       }
     };
 
@@ -51,7 +61,9 @@ export default function CustomCursor() {
       document.removeEventListener("mousemove", moveCursor);
       document.removeEventListener("mouseover", handleMouseOver);
       document.removeEventListener("mouseout", handleMouseOut);
+      document.body.style.cursor = ""; // Restore the default cursor
       document.body.removeChild(cursor);
+      document.head.removeChild(style); // Remove the added style
     };
   }, []);
 

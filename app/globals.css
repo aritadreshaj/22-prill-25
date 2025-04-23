@@ -62,17 +62,23 @@
     left: 0;
     width: 16px;
     height: 16px;
-    background-color: #ff6000;
+    background-color: #ff6000; /* Default color is orange */
     border-radius: 50%;
     pointer-events: none;
     transform: translate(-50%, -50%);
     z-index: 9999;
-    transition: transform 0.1s ease-out;
+    transition: background-color 0.2s ease, transform 0.1s ease-out;
   }
 
-  /* Hide the default cursor */
+  /* Change cursor color to black when hovering over links or buttons */
+  a:hover ~ #custom-cursor,
+  button:hover ~ #custom-cursor {
+    background-color: black; /* Change to black when hovering over clickable elements */
+  }
+
+  /* Ensure the custom cursor is always visible */
   body {
-    cursor: none;
+    cursor: none; /* Hide the default cursor globally */
   }
 
   /* Always show a scrollbar */
@@ -80,6 +86,7 @@
     overflow-y: scroll;
   }
 }
+
 @keyframes italicize {
   0%, 100% {
     font-style: normal;
