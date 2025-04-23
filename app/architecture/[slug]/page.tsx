@@ -1,9 +1,9 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import Header from "@/components/Header"; // Import the reusable Header component
-import Footer from "@/components/Footer"; // Import the reusable Footer component
-import CustomCursor from "@/components/CustomCursor"; // Import the reusable CustomCursor component
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import CustomCursor from "@/components/CustomCursor";
 
 const architecture = {
   whisperpine: {
@@ -50,29 +50,23 @@ const architecture = {
   },
 };
 
-type ArchitectureSlug = keyof typeof architecture; // Define the valid slugs based on the keys of the projects object
+type ArchitectureSlug = keyof typeof architecture;
 
 export default function ProjectPage() {
   const { slug } = useParams();
-  const project = architecture[slug as ArchitectureSlug]; // Explicitly cast slug to the ProjectSlug type
+  const project = architecture[slug as ArchitectureSlug];
 
   if (!project) {
     return (
       <div className="min-h-screen flex flex-col relative">
-        {/* Custom Cursor */}
         <CustomCursor />
-
-        {/* Header */}
         <Header />
-
         <div className="flex-1 mx-[20%] py-16">
           <h1 className="text-3xl font-light mb-6">Project Not Found</h1>
           <p className="text-neutral-700">
             The project you are looking for does not exist. Please check the URL or return to the Architecture page.
           </p>
         </div>
-
-        {/* Footer */}
         <Footer />
       </div>
     );
@@ -80,21 +74,17 @@ export default function ProjectPage() {
 
   return (
     <div className="min-h-screen flex flex-col relative">
-      {/* Custom Cursor */}
       <CustomCursor />
-
-      {/* Header */}
       <Header />
-
       <div className="flex-1 mx-[20%] py-16">
         <h1 className="text-3xl font-light mb-6">{project.title}</h1>
-        <p className="text-neutral-700 mb-4 animate-italicize">{project.description}</p>
+        <p className="text-neutral-700 mb-4">
+          <span className="animate-italicize">{project.description}</span>
+        </p>
         <p className="text-sm text-neutral-600">Year: {project.year}</p>
         <p className="text-sm text-neutral-600">Location: {project.location}</p>
         <p className="text-sm text-neutral-600">Category: {project.category}</p>
       </div>
-
-      {/* Footer */}
       <Footer />
     </div>
   );

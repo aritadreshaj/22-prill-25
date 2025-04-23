@@ -4,104 +4,81 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 10%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
+    /* Light Mode Colors */
+    --background: 0 0% 100%;  /* Darker background */
+    --foreground: 0 0% 10%;    /* Dark text */
+    --muted-foreground: 0 0% 30%; /* Lighter text */
     --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 9%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 0 0% 70%;
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 0 0% 10%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 0 0% 28%;
+    /* Dark Mode Colors */
+    --background: 0 0% 10%;    /* Dark background */
+    --foreground: 0 0% 98%;    /* Light text */
+    --muted-foreground: 0 0% 65%; /* Darker muted text */
   }
 }
 
+/* Tailwind Custom Utilities */
 @layer utilities {
   .border-border {
-    border-color: var(--border); /* Use the custom --border variable */
+    border-color: var(--border);
   }
 
   .bg-background {
-    background-color: var(--background); /* Use the custom --background variable */
+    background-color: var(--background);
   }
 
   .text-foreground {
-    color: var(--foreground); /* Use the custom --foreground variable */
+    color: var(--foreground);
+  }
+
+  .text-muted {
+    color: var(--muted-foreground);
   }
 }
 
+/* Global Styles */
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Poppins', sans-serif; /* Apply Poppins font */
-    cursor: none; /* Hide the default cursor */
+    @apply bg-background text-foreground; /* Apply background and text colors */
+    font-family: 'Poppins', sans-serif;
+    cursor: none; /* Hide default cursor */
   }
-}
 
-/* Custom cursor styles */
-#custom-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 16px; /* Adjust the size of the circle */
-  height: 16px;
-  background-color: #ff6000; /* Set the circle color */
-  border-radius: 50%; /* Make it a circle */
-  pointer-events: none; /* Ensure it doesn't block interactions */
-  transform: translate(-50%, -50%);
-  z-index: 9999; /* Ensure it appears above all other elements */
-  transition: transform 0.1s ease-out; /* Smooth movement */
-}
+  /* Custom Cursor */
+  #custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    background-color: #ff6000;
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    transition: transform 0.1s ease-out;
+  }
 
-/* Hide the default cursor */
-body {
-  cursor: none;
-}
+  /* Hide the default cursor */
+  body {
+    cursor: none;
+  }
 
-/* Hide the default cursor for clickable elements */
-a, button {
-  cursor: none; /* Hide the default hand cursor */
-}
-
-/* Always show a scrollbar */
-html {
-  overflow-y: scroll;
+  /* Always show a scrollbar */
+  html {
+    overflow-y: scroll;
+  }
 }
 @keyframes italicize {
   0%, 100% {

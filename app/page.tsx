@@ -9,6 +9,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer"; // Import the reusable Footer component
 import CustomCursor from "@/components/CustomCursor"; // Import the reusable CustomCursor component
 import { Typewriter } from "react-simple-typewriter";
+import '../styles/globals.css';
+import '@fontsource/poppins'; // Install via npm if preferred
 
 export default function Home() {
   const [showCookieBar, setShowCookieBar] = useState(true); // State for cookie bar
@@ -58,6 +60,11 @@ export default function Home() {
                 onLoopDone={() => {}}
               />
             </h1>
+
+{/* Significant Space */}
+<p className="mt-[250px] text-neutral-700 animate-italicize italic text-sm">
+  More to unfold. Come back soon.
+</p>
           </div>
         </section>
 
