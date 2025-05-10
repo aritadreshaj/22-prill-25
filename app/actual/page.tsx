@@ -116,36 +116,36 @@ export default function ShareYourStory() {
   };
 
   // Handle form submit
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formDataToSend = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach((file) => {
-          if (file instanceof File) formDataToSend.append(key, file);
-        });
-      } else if (value instanceof File) {
-        formDataToSend.append(key, value);
-      } else if (value) {
-        formDataToSend.append(key, value as string);
-      }
-    });
-    try {
-      const response = await fetch("/api/submit", {
-        method: "POST",
-        body: formDataToSend,
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  const formDataToSend = new FormData();
+  Object.entries(formData).forEach(([key, value]) => {
+    if (Array.isArray(value)) {
+      value.forEach((file) => {
+        if (file instanceof File) formDataToSend.append(key, file);
       });
-      if (response.ok) {
-        setSubmitted(true);
-        setFormData(initialFormData);
-      } else {
-        const data = await response.json().catch(() => ({}));
-        alert(data?.error || "Submission failed. Please try again.");
-      }
-    } catch (error) {
-      alert("An error occurred. Please try again.");
+    } else if (value instanceof File) {
+      formDataToSend.append(key, value);
+    } else if (value) {
+      formDataToSend.append(key, value as string);
     }
-  };
+  });
+  try {
+    const response = await fetch("/api/submit", {
+      method: "POST",
+      body: formDataToSend,
+    });
+    if (response.ok) {
+      setSubmitted(true);
+      setFormData(initialFormData);
+    } else {
+      const data = await response.json().catch(() => ({}));
+      alert(data?.error || "Submission failed. Please try again.");
+    }
+  } catch (error) {
+    alert("An error occurred. Please try again.");
+  }
+};
 
   // Typewriter effect for the title
   const titleFull = "një shtëpi, një rrugë";
