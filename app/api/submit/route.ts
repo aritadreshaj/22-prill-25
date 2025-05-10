@@ -3,6 +3,8 @@ import { randomUUID } from "crypto";
 import nodemailer from "nodemailer";
 import UndiciFile from "undici";
 import admin from "firebase-admin";
+import fs from "fs";
+import path from "path";
 
 export const runtime = "nodejs";
 
@@ -47,7 +49,8 @@ const sendConfirmationEmail = (email: string) => {
 
 // Initialize Firebase Admin only once
 if (!admin.apps.length) {
-  const serviceAccount = require("../../../firebase-service-account.json");
+  const serviceAccountPath = path.join(process.cwd(), "firebase-service-account.json");
+  const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, "utf8"));
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     storageBucket: "prill-web.appspot.com", // <-- your bucket name

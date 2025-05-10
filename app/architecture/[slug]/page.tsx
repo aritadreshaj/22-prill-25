@@ -59,7 +59,7 @@ export default function ProjectPage() {
   const publicProjects = projects.filter((project) => !project.private);
 
   // Sort public projects by date in descending order
-  const sortedProjects = publicProjects.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const sortedProjects = [...publicProjects].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   // Find the index of the current project and determine the previous and next public projects
   const projectIndex = sortedProjects.findIndex((p) => p.slug === slug);
