@@ -1,4 +1,3 @@
-"use client"; 
 import projectsData from '@/data/architecture-prj.json';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
