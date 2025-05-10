@@ -1,0 +1,12 @@
+specVersion: "v1"
+serviceId: "22-prill-25"
+location: "europe-central2"
+schema:
+  source: "./schema"
+  datasource:
+    postgresql:
+      database: "fdcdb"
+      cloudSql:
+        instanceId: "may"
+      # schemaValidation: "COMPATIBLE"
+connectorDirs: ["./connector"]

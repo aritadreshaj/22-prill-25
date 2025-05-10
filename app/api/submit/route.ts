@@ -1,9 +1,8 @@
 import { NextRequest } from "next/server";
-import fs from "fs-extra";
-import path from "path";
 import { randomUUID } from "crypto";
 import nodemailer from "nodemailer";
 import UndiciFile from "undici";
+import admin from "firebase-admin";
 
 export const runtime = "nodejs";
 
@@ -46,6 +45,16 @@ const sendConfirmationEmail = (email: string) => {
   return transporter.sendMail(mailOptions);
 };
 
+// Initialize Firebase Admin only once
+if (!admin.apps.length) {
+  const serviceAccount = require("../../../firebase-service-account.json");
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: "prill-web.appspot.com", // <-- your bucket name
+  });
+}
+const bucket = admin.storage().bucket();
+
 export async function POST(req: Request) {
   try {
     const contentType = req.headers.get("content-type") || "";
@@ -67,7 +76,6 @@ export async function POST(req: Request) {
     let userBirthday = "";
 
     for (const [key, value] of formData.entries()) {
-      // Improved file detection: check for presence of arrayBuffer and name
       if (
         value &&
         typeof (value as any).arrayBuffer === "function" &&
@@ -78,8 +86,6 @@ export async function POST(req: Request) {
         const timestamp = Date.now();
         const uniqueName = `${key}_${timestamp}_${(value as any).name}`;
         files.push({ file: value as File, filename: uniqueName });
-        // Debug log
-        console.log(`Detected file: ${uniqueName}, size: ${(value as any).size}`);
       } else if (typeof value === "string") {
         textContent += `${key}: ${value}\n`;
         if (key === "email") userEmail = value;
@@ -96,15 +102,14 @@ export async function POST(req: Request) {
       });
     }
 
-    // Sanitize for folder name (lowercase, remove spaces/special chars, use underscores)
+    // Sanitize for folder name
     const safe = (str: string) =>
       (str || "anon").toLowerCase().replace(/[^a-z0-9]/gi, "_");
     const folderName = `story_${safe(userName)}_${safe(userSurname)}_${safe(userBirthday)}`;
-    const submissionsDir = path.join(process.cwd(), "submissions");
-    const folderPath = path.join(submissionsDir, folderName);
-    await fs.ensureDir(folderPath);
 
-    await fs.writeFile(path.join(folderPath, "text.txt"), textContent, "utf8");
+    // --- Upload text content to Firebase Storage ---
+    const textFile = bucket.file(`${folderName}/text.txt`);
+    await textFile.save(textContent, { contentType: "text/plain" });
 
     const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -116,10 +121,10 @@ export async function POST(req: Request) {
         });
       }
       const arrayBuffer = await file.arrayBuffer();
-      const filePath = path.join(folderPath, filename);
-      await fs.writeFile(filePath, Buffer.from(arrayBuffer));
-      // Debug log
-      console.log(`Saved file: ${filePath}`);
+      const uploadFile = bucket.file(`${folderName}/${filename}`);
+      await uploadFile.save(Buffer.from(arrayBuffer), {
+        contentType: (file as any).type || "application/octet-stream",
+      });
     }
 
     if (userEmail) {

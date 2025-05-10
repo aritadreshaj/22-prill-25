@@ -1,5 +1,4 @@
-"use client";
-
+"use client"; 
 import projectsData from '@/data/architecture-prj.json';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -44,7 +43,7 @@ const projects: Project[] = projectsData.map((project) => ({
 }));
 
 export default function ProjectPage() {
-  const { slug } = useParams();
+  const { slug } = useParams() as { slug?: string };
 
   if (!slug) {
     return <div>Loading...</div>;
@@ -173,4 +172,14 @@ export default function ProjectPage() {
       <Footer />
     </div>
   );
+}
+
+// Add the generateStaticParams function for dynamic slugs
+export async function generateStaticParams() {
+  // Fetch all the slugs
+  const slugs = projects.map((project) => project.slug);
+
+  return slugs.map((slug) => ({
+    slug,
+  }));
 }
