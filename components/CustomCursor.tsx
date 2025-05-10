@@ -8,8 +8,8 @@ export default function CustomCursor() {
     const cursor = document.createElement("div");
     cursor.id = "custom-cursor";
     cursor.style.position = "fixed";
-    cursor.style.width = "16px";
-    cursor.style.height = "16px";
+    cursor.style.width = "12px";
+    cursor.style.height = "12px";
     cursor.style.borderRadius = "50%";
     cursor.style.backgroundColor = "#ff6000"; // Default color is orange
     cursor.style.pointerEvents = "none";
@@ -39,7 +39,7 @@ export default function CustomCursor() {
     // Change cursor color to black when hovering over clickable elements
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (target.tagName === "A" || target.tagName === "BUTTON") {
+      if (target.tagName === "A" || target.tagName === "BUTTON" || target.classList.contains("icon") || (target.tagName === "IMG" && target.hasAttribute("onclick"))) {
         cursor.style.backgroundColor = "black"; // Change to black
       }
     };
@@ -47,6 +47,8 @@ export default function CustomCursor() {
     const handleMouseOut = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target.tagName === "A" || target.tagName === "BUTTON") {
+        cursor.style.backgroundColor = "#ff6000"; // Revert to orange
+      } else if (target.tagName === "IMG" && target.hasAttribute("onclick")) {
         cursor.style.backgroundColor = "#ff6000"; // Revert to orange
       }
     };

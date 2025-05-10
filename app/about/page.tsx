@@ -19,7 +19,7 @@ export default function AboutPage() {
         {/* About Section */}
         <h1 className="text-2xl font-light mb-10">about</h1>
         <p className="text-neutral-700 mb-4">
-          Arita Dreshaj is an architect and urban designer whose research draws on historical theory to examine the social dimensions of space and memory. Since 2020, she has contributed to a diverse range of projects, from new builds to reconstructions and urban-scale competitions. Her work has been recognized with multiple awards, including four first prizes, two third places, and one honorable mention. Her work focuses on the intersection of architecture, urban design, and historical research, aiming to create spaces that reflect cultural memory and social identity. She is particularly focused on how architecture can become a vessel for social identity and historical continuity in an evolving urban landscape.
+        Arita Dreshaj is an architect and urban designer whose research explores the intersections of space, memory, and historical theory. Since 2020, she has worked across a range of projects, from new constructions to reconstructions and urban-scale competitions, earning multiple awards including four first prizes. Her work investigates how architecture can serve as a vessel for cultural memory and social identity within evolving urban landscapes.
         </p>
 
         {/* Contact Information */}

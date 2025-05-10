@@ -13,12 +13,28 @@ const config: Config = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: {
+        DEFAULT: "1rem", // Reduced padding for smaller screens
+        lg: "2rem", // Larger padding for larger screens
+      },
       screens: {
         "2xl": "1400px",
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["Poppins", "sans-serif"], // Default font
+      },
+      fontSize: {
+        base: "16px", // Set the base font size to 16px (default)
+        sm: "14px",
+        lg: "18px",
+        xl: "20px",
+        "2xl": "24px",
+        "3xl": "30px",
+        "4xl": "36px",
+        "5xl": "48px",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

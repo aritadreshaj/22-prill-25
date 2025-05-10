@@ -9,8 +9,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer"; // Import the reusable Footer component
 import CustomCursor from "@/components/CustomCursor"; // Import the reusable CustomCursor component
 import { Typewriter } from "react-simple-typewriter";
+import typography from "@/styles/typography"; // Import the typography configuration
 import "../styles/globals.css";
-import "@fontsource/poppins"; // Install via npm if preferred
+import "@fontsource/poppins"; // Ensure the font is imported globally
 
 export default function Home() {
   const [showCookieBar, setShowCookieBar] = useState(true); // State for cookie bar
@@ -20,7 +21,7 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setIsInverted((prev) => !prev); // Toggle the image state
-    }, 2000); // Change every 2 seconds
+    }, 500); // Change every 2 seconds
 
     return () => clearInterval(interval); // Cleanup on component unmount
   }, []);
@@ -42,14 +43,16 @@ export default function Home() {
               src={isInverted ? "/headline-invert.jpg" : "/headline.jpg"} // Toggle between images
               alt="a way forward, a way back"
               fill
-              className="object-cover transition-all duration-1000" // Smooth transition
+              className="object-cover transition-all duration-200" // Smooth transition
               priority
             />
           </div>
 
           {/* Text Below the Image */}
           <div className="mt-8 text-center">
-            <h1 className="text-[#ff6000] text-[3xl] md:text-[5xl] font-light">
+            <h1
+              className={`${typography.colors.orange} ${typography.sizes.xs} font-light`}
+            >
               <Typewriter
                 words={["a way forward, a way back."]}
                 loop={false}
@@ -62,7 +65,9 @@ export default function Home() {
             </h1>
 
             {/* Significant Space */}
-            <p className="mt-[250px] text-neutral-700 animate-italicize italic text-sm">
+            <p
+              className={`mt-[250px] ${typography.colors.darkGray} italic ${typography.sizes.xs}`}
+            >
               More to unfold. Come back soon.
             </p>
           </div>
@@ -71,10 +76,17 @@ export default function Home() {
         <section className="py-16 md:py-24 container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
             <div>
-              <h2 className="text-2xl font-light mb-6">About</h2>
-              <p className="text-neutral-700 mb-4">
-                Arita Dreshaj is an architect and urban designer whose research draws on historical theory to examine
-                the social dimensions of space and memory.
+              <h2
+                className={`${typography.sizes.xl} ${typography.weights.light} ${typography.colors.black} mb-6`}
+              >
+                About
+              </h2>
+              <p
+                className={`${typography.sizes.sm} ${typography.weights.light} ${typography.colors.darkGray} mb-4`}
+              >
+                Arita Dreshaj is an architect and urban designer whose research
+                draws on historical theory to examine the social dimensions of
+                space and memory.
               </p>
               <Button asChild variant="outline" className="group">
                 <Link href="/about">
@@ -84,7 +96,11 @@ export default function Home() {
               </Button>
             </div>
             <div>
-              <h2 className="text-2xl font-light mb-6">Projects</h2>
+              <h2
+                className={`${typography.sizes.xl} ${typography.weights.light} ${typography.colors.black} mb-6`}
+              >
+                Projects
+              </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Link Research to app/research */}
                 <Link
@@ -94,16 +110,22 @@ export default function Home() {
                   Research
                 </Link>
 
-                {/* Link Competitions, Concepts, Built to app/architecture */}
-                {["Competitions", "Concepts", "Built"].map((category) => (
-                  <Link
-                    key={category}
-                    href="/architecture"
-                    className="border border-neutral-200 p-4 hover:bg-neutral-50 transition-colors"
-                  >
-                    {category}
-                  </Link>
-                ))}
+                {/* Updated links */}
+                <Link
+                  href="/architecture"
+                  className="border border-neutral-200 p-4 hover:bg-neutral-50 transition-colors"
+                >
+                  Architecture
+                </Link>
+                <div className="border border-neutral-200 p-4">
+                  Philosophy
+                </div>
+                <Link
+                  href="/actual"
+                  className="border border-neutral-200 p-4 hover:bg-neutral-50 transition-colors"
+                >
+                  Actual
+                </Link>
               </div>
             </div>
           </div>
@@ -115,9 +137,9 @@ export default function Home() {
 
       {showCookieBar && (
         <div className="fixed bottom-0 left-0 right-0 bg-neutral-800 text-white p-4 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-sm">
-            To use the website to its full extent, the activation of cookies, external media, and visitor statistics is
-            required.
+          <p className={`${typography.sizes.xs} ${typography.weights.light} ${typography.colors.white}`}>
+            To use the website to its full extent, the activation of cookies,
+            external media, and visitor statistics is required.
           </p>
           <div className="flex gap-2">
             <Button

@@ -1,44 +1,15 @@
-import type React from "react";
+"use client";
+
+import React from "react";
 import "@/app/globals.css";
-import { Inter } from "next/font/google";
+import "@/styles/typography.js";
 import { ThemeProvider } from "@/components/theme-provider";
 
-// Import Toma Sans font from Google Fonts or a custom source
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata = {
-  title: "Arita Dreshaj | Architecture & Research",
-  description:
-    "Arita Dreshaj is a Berlin based architect and urban designer whose research draws on historical theory to examine the social dimensions of space and memory.",
-  generator: "v0.dev",
-};
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de" suppressHydrationWarning>
-      <head>
-        {/* Favicon */}
-        <link rel="icon" href="/icon-web.png" type="image/png" />
-
-        {/* Fonts */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+    <html lang="en">
+      <body>
+        {children}
       </body>
     </html>
   );

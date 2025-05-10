@@ -1,96 +1,64 @@
 "use client";
 
-import Header from "@/components/Header"; // Import the reusable Header component
-import Footer from "@/components/Footer"; // Import the reusable Footer component
-import CustomCursor from "@/components/CustomCursor"; // Import the reusable CustomCursor component
-import Link from "next/link"; // Import Link for navigation
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import CustomCursor from "@/components/CustomCursor";
+import Link from "next/link";
+import projects from '@/data/architecture-prj.json';
+import { useState, useEffect } from "react";
+import "@/styles/scroll-reveal.css";
+import "@/styles/globals.css";
 
 export default function ArchitecturePage() {
+  // Sort projects by date in descending order
+  const sortedProjects = projects.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  // State to track the number of projects to display
+  const [visibleProjects, setVisibleProjects] = useState(6);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      if (scrollPosition >= documentHeight - 100) {
+        setVisibleProjects((prev) => Math.min(prev + 6, sortedProjects.length));
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col relative">
-      {/* Custom Cursor */}
       <CustomCursor />
-
-      {/* Header */}
       <Header />
-
-      {/* Main Content */}
-      <main className="flex-1 mx-[20%] py-16">
-        <h1 className="text-2xl font-light mb-10">architecture</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
-          {/* Row 1 */}
-          <div>
-            <div className="aspect-[1/1] bg-neutral-200"></div>
-            <div className="mt-4 text-center">
-              <p className="text-lg font-medium">
-                <Link href="/architecture/whisperpine">Whisperpine</Link>
-              </p>
-              <p className="text-sm text-neutral-600">Prishtina, Kosova</p>
-              <p className="text-sm text-neutral-600">2025</p>
-              <p className="text-sm text-neutral-600">single-family home</p>
-            </div>
-          </div>
-          <div>
-            <div className="aspect-[1/1] bg-neutral-200"></div>
-            <div className="mt-4 text-center">
-              <p className="text-lg font-medium">
-                <Link href="/architecture/home-above-rails">Home Above Rails</Link>
-              </p>
-              <p className="text-sm text-neutral-600">Paris, France</p>
-              <p className="text-sm text-neutral-600">2025</p>
-              <p className="text-sm text-neutral-600">social-housing</p>
-            </div>
-          </div>
-          <div>
-            <div className="aspect-[1/1] bg-neutral-200"></div>
-            <div className="mt-4 text-center">
-              <p className="text-lg font-medium">
-                <Link href="/architecture/eco-lodge">Eco Lodge</Link>
-              </p>
-              <p className="text-sm text-neutral-600">Burim, Kosova</p>
-              <p className="text-sm text-neutral-600">2024</p>
-              <p className="text-sm text-neutral-600">micro-cabin</p>
-            </div>
-          </div>
-
-          {/* Row 2 */}
-          <div>
-            <div className="aspect-[1/1] bg-neutral-200"></div>
-            <div className="mt-4 text-center">
-              <p className="text-lg font-medium">
-                <Link href="/architecture/leverkusen-mitte-quartier">Leverkusen Mitte Quartier</Link>
-              </p>
-              <p className="text-sm text-neutral-600">Leverkusen, Germany</p>
-              <p className="text-sm text-neutral-600">2024</p>
-              <p className="text-sm text-neutral-600">bike parking & office spaces</p>
-            </div>
-          </div>
-          <div>
-            <div className="aspect-[1/1] bg-neutral-200"></div>
-            <div className="mt-4 text-center">
-              <p className="text-lg font-medium">
-                <Link href="/architecture/rostock-theaterwerk">Rostock Theaterwerk</Link>
-              </p>
-              <p className="text-sm text-neutral-600">Rostock, Germany</p>
-              <p className="text-sm text-neutral-600">2024</p>
-              <p className="text-sm text-neutral-600">theater production facility</p>
-            </div>
-          </div>
-          <div>
-            <div className="aspect-[1/1] bg-neutral-200"></div>
-            <div className="mt-4 text-center">
-              <p className="text-lg font-medium">
-                <Link href="/architecture/brickwork-reborn">Brickwork Reborn</Link>
-              </p>
-              <p className="text-sm text-neutral-600">Burim, Kosova</p>
-              <p className="text-sm text-neutral-600">2024</p>
-              <p className="text-sm text-neutral-600">single-house family</p>
-            </div>
+      <main className="flex-1 flex flex-col py-16">
+        <div className="margin-rule">
+          <h1 className="text-2xl font-light mb-10 text-left">architecture</h1>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+            {sortedProjects.slice(0, visibleProjects).map((project) => (
+              <div key={project.slug} className="opacity-100 transition-opacity duration-500">
+                <div className="aspect-[1/1] bg-neutral-200"></div>
+                <div className="mt-4 text-center">
+                  {project.private ? (
+                    <p className="text-lg font-medium text-gray-500 cursor-not-allowed">{project.title}</p>
+                  ) : (
+                    <p className="text-lg font-medium">
+                      <Link href={`/architecture/${project.slug}`} className="text-black hover:text-[#ff6000]">
+                        {project.title}
+                      </Link>
+                    </p>
+                  )}
+                  <p className="text-sm text-neutral-600">{project.location}</p>
+                  <p className="text-sm text-neutral-600">{new Date(project.date).getFullYear()}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </main>
-
-      {/* Footer */}
       <Footer />
     </div>
   );

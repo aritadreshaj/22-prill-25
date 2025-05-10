@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image"; // Importing next/image for optimized image handling
+import typography from "@/styles/typography"; // Import the typography configuration
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -23,7 +24,7 @@ export default function Header() {
         <div className="w-full flex justify-between items-center py-6">
           <Link
             href="/"
-            className="text-2xl font-light tracking-wide text-[#ff6000] pl-6"
+            className={`${typography.sizes.lg} ${typography.weights.medium} tracking-wide ${typography.colors.orange} pl-8`}
             style={{ fontFamily: "'Poppins', sans-serif" }}
           >
             a r i t a d r e s h a j
@@ -55,13 +56,22 @@ export default function Header() {
         onMouseLeave={handleMenuClose} // Close the menu when the cursor leaves the menu area
       >
         <div className="flex flex-col items-start p-6">
-          <Link href="/research" className="text-lg font-medium mb-4 hover:text-[#ff6000]">
+        <Link
+            href="/research"
+            className={`${typography.sizes.lg} ${typography.weights.medium} mb-4 hover:${typography.colors.orange}`}
+          >
             Research
           </Link>
-          <Link href="/architecture" className="text-lg font-medium mb-4 hover:text-[#ff6000]">
+          <Link
+            href="/architecture"
+            className={`${typography.sizes.lg} ${typography.weights.medium} mb-4 hover:${typography.colors.orange}`}
+          >
             Architecture
           </Link>
-          <Link href="/about" className="text-lg font-medium hover:text-[#ff6000]">
+          <Link
+            href="/about"
+            className={`${typography.sizes.lg} ${typography.weights.medium} hover:${typography.colors.orange}`}
+          >
             About
           </Link>
         </div>
