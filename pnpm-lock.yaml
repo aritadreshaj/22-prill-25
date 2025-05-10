@@ -5822,4 +5822,16 @@ snapshots:
   yocto-queue@0.1.0:
     optional: true
 
-  zod@3.24.4: {}
+    zod@3.24.4: {}
+  
+  
+  // To fix this error:
+  // Your pnpm-lock.yaml is out of sync with your package.json.
+  // Run the following command in your project root (locally):
+  
+  pnpm install
+  
+  // This will update pnpm-lock.yaml to match package.json.
+  // Then commit and push both package.json and pnpm-lock.yaml to your repository.
+  
+  // After that, redeploy your project.
